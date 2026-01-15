@@ -29,3 +29,18 @@ def delete_employee(db: Session, employee_id: int):
         db.delete(employee)
         db.commit()
     return employee
+
+def create_attendance(db: Session, attendance: schemas.AttendanceCreate):
+    db_attendance = models.Attendance(
+        employee_id=attendance.employee_id,
+        date=attendance.date,
+        status=attendance.status
+    )
+    db.add(db_attendance)
+    db.commit()
+    db.refresh(db_attendance)
+    return db_attendance
+
+def get_attendance_by_employee(db: Session, employee_id: int):
+    return db.query(models.Attendance).filter(models.Attendance.employee_id == employee_id).all()
+

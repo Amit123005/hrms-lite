@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routers import employee
+from .routers import employee, attendance
 from .database import Base, engine
 
 app = FastAPI(title="HRMS Lite API", version="1.0.0")
@@ -9,6 +9,7 @@ Base.metadata.create_all(bind=engine)
 
 # Include routers
 app.include_router(employee.router)
+app.include_router(attendance.router)
 
 @app.get("/")
 def health_check():
